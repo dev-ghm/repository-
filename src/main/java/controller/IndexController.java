@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +15,9 @@ public class IndexController extends HttpServlet{
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(request.getSession().getAttribute("authUser") == null) {
+		
 			request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
+			// response.sendRedirect(LEGACY_DO_HEAD)
 		}else {
 			request.getRequestDispatcher("/WEB-INF/view/index-logon.jsp").forward(request, response);
 		}

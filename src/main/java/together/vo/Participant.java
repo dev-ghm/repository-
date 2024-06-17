@@ -1,14 +1,16 @@
 package together.vo;
 
+import java.sql.Date;
+
 public class Participant {
 	int id;
 	String userid;
 	int eventid;
-	String joinat;
+	Date joinat;
 	public Participant() {
 		super();
 	}
-	public Participant(int id, String userid, int eventid, String joinat) {
+	public Participant(int id, String userid, int eventid, Date joinat) {
 		super();
 		this.id = id;
 		this.userid = userid;
@@ -33,12 +35,11 @@ public class Participant {
 	public void setEventid(int eventid) {
 		this.eventid = eventid;
 	}
-	public String getJoinat() {
+	public Date getJoinat() {
 		return joinat;
 	}
-	public void setJoinat(String joinat) {
+	public void setJoinat(Date joinat) {
 		this.joinat = joinat;
 	}
-
 	
 }

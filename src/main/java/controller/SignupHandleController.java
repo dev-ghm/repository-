@@ -37,7 +37,7 @@ public class SignupHandleController extends HttpServlet {
 		}
 		
 		if(result) {
-			response.sendRedirect(request.getContextPath()+"/index-logon");
+			response.sendRedirect(request.getContextPath()+"/index");
 		}else {
 		response.sendRedirect(request.getContextPath()+"/signup");
 		}
