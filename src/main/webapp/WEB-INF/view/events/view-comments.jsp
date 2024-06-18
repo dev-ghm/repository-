@@ -28,28 +28,36 @@
 			<h1>
 				<span class="warning">${event.tag }</span> ${event.title}
 			</h1>
-			<p class="fs-3">${event.description }</p>
+			<p class="fs-3"><c:out value="${event.description }"/></p>
+			
 			<p class="fs-3">
 				<span>📆 ${event.registerat }</span> <span>🚩 ${sport.location } (${sport.agency})</span> <span>😊
 					${event.attendee } / ${event.capacity}</span>
 			</p>
 		</div>
 		<div class="my-2 text-right">
-			<button class="p-2 fs-4 border-rounded" >참가신청</button>
+		<a href="${pageContext.servletContext.contextPath }/events/join/${event.id}">
+			<button class="p-2 fs-4 border-rounded border:hover" >참가신청</button>
+			</a>
 		</div>
 		<h3 class="my-2">참가자들(${event.attendee })</h3>
 		<div>
 			<ul style="list-style: none">
-				<li><div>
-						${event.hostid} (주최자) - ${event.openat } 에 참가신청
-					</div>
-				</li>
-
-			</ul>
-
+				<li><c:forEach items="${p }" var="one">
+						<c:choose>
+							<c:when test="${one.userid == event.hostid }">
+								<div>
+									<span class="warning">${one.userid } (주최자)</span> -
+									${one.joinat } 에 참가신청
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div>${one.userid } - ${one.joinat } 에 참가신청</div>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach></li>
+					</ul>
+				</div>
 		</div>
-
-
-	</div>
 </body>
 </html>

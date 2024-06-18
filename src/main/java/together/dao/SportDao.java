@@ -34,7 +34,7 @@ public class SportDao {
 		}
 	}
 	
-	public Sport findByNumber(int number) throws SQLException {
+	public Sport findByNumber(int sportnumber) throws SQLException {
 		OracleDataSource ods = new OracleDataSource();
 		ods.setURL("jdbc:oracle:thin:@//15.164.48.36:1521/xe");
 		ods.setUser("fit_together");
@@ -42,7 +42,7 @@ public class SportDao {
 		try (Connection conn = ods.getConnection()) {
 
 			PreparedStatement stmt = conn.prepareStatement("SELECT * FROM SPORTS WHERE SPORT_NUMBER=?");
-
+			stmt.setInt(1, sportnumber);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				Sport one = new Sport();

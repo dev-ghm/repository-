@@ -22,17 +22,16 @@ public class ParticipantDao {
 		try (Connection conn = ods.getConnection()) {
 
 			PreparedStatement stmt = conn
-					.prepareStatement("INSERT INTO PARTICIPANTS VALUES(PARTICIPANTS_SEQ.NEXTVAL, ?, ?, ?, ?)");
-			stmt.setInt(1, newParticipant.getId());
-			stmt.setString(2, newParticipant.getUserid());
-			stmt.setInt(3, newParticipant.getEventid());
-			stmt.setDate(4, newParticipant.getJoinat());
+					.prepareStatement("INSERT INTO PARTICIPANTS VALUES(PARTICIPANTS_SEQ.NEXTVAL, ?, ?, ?)");
+			stmt.setString(1, newParticipant.getUserid());
+			stmt.setInt(2, newParticipant.getEventid());
+			stmt.setDate(3, newParticipant.getJoinat());
 
 			int r = stmt.executeUpdate();
 
 			return r == 1 ? true : false;
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return false;
 		}
 	}

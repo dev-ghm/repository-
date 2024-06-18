@@ -76,7 +76,7 @@ public class EventDao {
 				Event one = new Event();
 				one.setId(rs.getInt("id"));
 				one.setTitle(rs.getString("title"));
-				one.setDescription(rs.getString("title"));
+				one.setDescription(rs.getString("description"));
 				one.setTag(rs.getString("tag"));
 				one.setSportid(rs.getInt("sport_id"));
 				one.setHostid(rs.getString("host_id"));
@@ -96,7 +96,7 @@ public class EventDao {
 
 	}
 		
-		public List<Event> findAllOrderByOpenAt() throws Exception {
+		public List<Event> findAll() throws Exception {
 			OracleDataSource ods = new OracleDataSource();
 			ods.setURL("jdbc:oracle:thin:@//15.164.48.36:1521/xe");
 			ods.setUser("fit_together");
@@ -163,6 +163,26 @@ public class EventDao {
 
 				int r = stmt.executeUpdate();
 
+				return r == 1 ? true : false;
+			} catch (Exception e) {
+				System.out.println(e);
+				return false;
+			}
+
+		}
+		
+		public boolean increaseAttendeeById(int id) throws Exception {
+			OracleDataSource ods = new OracleDataSource();
+			ods.setURL("jdbc:oracle:thin:@//15.164.48.36:1521/xe");
+			ods.setUser("fit_together");
+			ods.setPassword("oracle");
+			try (Connection conn = ods.getConnection()) {
+				// 식별키로 조회하고,
+				PreparedStatement stmt = conn.prepareStatement("UPDATE EVENTS SET ATTENDEE = ATTENDEE+1 WHERE ID=?");
+				stmt.setInt(1, id);
+
+				int r = stmt.executeUpdate();
+				
 				return r == 1 ? true : false;
 			} catch (Exception e) {
 				System.out.println(e);

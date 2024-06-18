@@ -19,7 +19,7 @@
 </head>
 <body>
 	<div class="container px-1">
-		<div class="my-3">로그온 메뉴바 들어갈 자리</div>
+		<div class="my-3"><%@ include file="/WEB-INF/view/common/navbar.jsp" %></div>
 		<div>
 			<span>체육행사등록</span> &gt; <span class="warning">행사 세부 정보 입력</span>
 		</div>

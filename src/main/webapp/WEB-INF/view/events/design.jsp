@@ -20,7 +20,7 @@
 <body>
 	<div class="container px-1">
 		<div>
-			로그온 메뉴바 들어갈 자리
+			<%@ include file="/WEB-INF/view/common/navbar.jsp" %>
 		</div>
 		<h2>새 행사 등록</h2>
 		<p>

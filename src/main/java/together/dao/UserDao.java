@@ -62,5 +62,27 @@ public class UserDao {
 				return null;
 			}
 		}
+		
+		public boolean deleteByUserId(String userid) throws SQLException {
+			OracleDataSource ods = new OracleDataSource();
+			ods.setURL("jdbc:oracle:thin:@//15.164.48.36:1521/xe");
+			ods.setUser("fit_together");
+			ods.setPassword("oracle");
+
+			try (Connection conn = ods.getConnection()) {
+
+				PreparedStatement stmt = 
+						conn.prepareStatement("DELETE FROM USERS WHERE ID=?");
+				stmt.setString(1, userid);
+				
+				int r = stmt.executeUpdate();
+
+				return r == 1 ? true : false;
+			} catch (Exception e) {
+				System.out.println(e);
+				return false;
+			}
+
+		}
 
 }
