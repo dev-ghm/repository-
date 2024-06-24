@@ -10,6 +10,8 @@ import java.util.List;
 import oracle.jdbc.datasource.impl.OracleDataSource;
 import together.vo.Event;
 import together.vo.Participant;
+import together.vo.User;
+import together.vo.complex.ParticipantWithDetail;
 
 
 public class ParticipantDao {
@@ -90,4 +92,49 @@ public class ParticipantDao {
 			return null;
 		}
 	}
+	
+	
+	public List<ParticipantWithDetail> findByEventIdWithUserDetail(int eventId) throws SQLException {
+		OracleDataSource ods = new OracleDataSource();
+		ods.setURL("jdbc:oracle:thin:@//13.125.135.193:1521/xe");
+		ods.setUser("fit_together");
+		ods.setPassword("oracle");
+		try (Connection conn = ods.getConnection()) {
+
+			PreparedStatement stmt = conn
+					.prepareStatement("SELECT * FROM PARTICIPANTS p JOIN USERS u ON p.USER_ID = u.ID WHERE EVENT_ID=?");
+			stmt.setInt(1, eventId);
+
+			ResultSet rs = stmt.executeQuery();
+			List<ParticipantWithDetail> participants = new ArrayList<>();
+			while (rs.next()) {
+				Participant one = new Participant();
+				one.setId(rs.getInt("id"));
+				one.setEventid(rs.getInt("event_id"));
+				one.setUserid(rs.getString("user_id"));
+				one.setJoinat(rs.getDate("join_at"));
+
+				User user = new User();
+				user.setId(rs.getString("id"));
+				user.setPassword(rs.getString("password"));
+				user.setName(rs.getString("name"));
+				user.setGender(rs.getString("gender"));
+				user.setBirth(rs.getInt("birth"));
+				user.setEmail(rs.getString("email"));
+				user.setInterest(rs.getString("interest"));
+				
+				ParticipantWithDetail pwud = new ParticipantWithDetail();
+				pwud.setParticipant(one);
+				pwud.setUser(user);
+				
+				participants.add(pwud);
+			}
+			
+			return participants;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
+

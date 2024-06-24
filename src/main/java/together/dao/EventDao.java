@@ -8,6 +8,7 @@ import java.util.List;
 
 import oracle.jdbc.datasource.impl.OracleDataSource;
 import together.vo.Event;
+import together.vo.complex.EventTagCount;
 
 
 public class EventDao {
@@ -190,4 +191,69 @@ public class EventDao {
 			}
 
 		}
+		
+		public List<EventTagCount> countGroupByTag() throws SQLException {
+			OracleDataSource ods = new OracleDataSource();
+			ods.setURL("jdbc:oracle:thin:@//15.164.48.36:1521/xe");
+			ods.setUser("fit_together");
+			ods.setPassword("oracle");
+			try (Connection conn = ods.getConnection()) {
+
+				PreparedStatement stmt = conn.prepareStatement("SELECT TAG, COUNT(*) CNT FROM EVENTS GROUP BY TAG");
+
+				ResultSet rs = stmt.executeQuery();
+				List<EventTagCount> tagCounts = new ArrayList<EventTagCount>();
+				while (rs.next()) {
+					EventTagCount one = new EventTagCount();
+					one.setTag(rs.getString("tag"));
+					one.setCnt(rs.getInt("CNT"));
+					tagCounts.add(one);
+				}
+
+				return tagCounts;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		public List<Event> findByTitleLikeOrDescriptionLike(String pattern) throws SQLException {
+
+			OracleDataSource ods = new OracleDataSource();
+			ods.setURL("jdbc:oracle:thin:@//15.164.48.36:1521/xe");
+			ods.setUser("fit_together");
+			ods.setPassword("oracle");
+			try (Connection conn = ods.getConnection()) {
+
+				PreparedStatement stmt = 
+						conn.prepareStatement("SELECT * FROM EVENTS WHERE TITLE LIKE ? OR DESCRIPTION LIKE ? ORDER BY OPEN_AT ASC");
+				stmt.setString(1, "%"+pattern+"%");
+				stmt.setString(2, "%"+pattern+"%");
+				ResultSet rs = stmt.executeQuery();
+				List<Event> events = new ArrayList<Event>();
+				while (rs.next()) {
+					Event one = new Event();
+					one.setId(rs.getInt("id"));
+					one.setTitle(rs.getString("title"));
+					one.setDescription(rs.getString("title"));
+					one.setTag(rs.getString("tag"));
+					one.setSportid(rs.getInt("sport_id"));
+					one.setHostid(rs.getString("host_id"));
+					one.setOpenat(rs.getDate("open_at"));
+
+					one.setCapacity(rs.getInt("capacity"));
+					one.setAttendee(rs.getInt("attendee"));
+					one.setRegisterat(rs.getDate("register_at"));
+
+					events.add(one);
+				}
+
+				return events;
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+
+		}
+		
 }

@@ -7,22 +7,27 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import together.dao.UserDao;
-import together.vo.User;
 
+@WebServlet("/logout")
+public class LogoutController extends HttpServlet {
 
-public class LogoutController extends HttpServlet{
-	
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	String id = request.getParameter("id");
-	UserDao userDao = new UserDao();
-	User user = userDao.deleteByUserId(id);
-	request.getSession().setAttribute("auth", false);
-	request.getSession().removeAttribute("authuserid");
-//	session.invalidate();	// 이 사용자의 세션을 강제 종료
-	
-	response.sendRedirect(request.getContextPath()+"/index.jsp");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (request.getSession().getAttribute("authUser") == null) {
+			response.sendRedirect(request.getContextPath() + "/index");
+			return;
+		}
+		request.getRequestDispatcher("/WEB-INF/view/logout-decide.jsp").forward(request, response);
+	}
 
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+//		request.getSession().setAttribute("authUser", null);
+		request.getSession().removeAttribute("authUser");
+//	request.getSession().invalidate();
+
+		response.sendRedirect(request.getContextPath() + "/index");
 	}
 }

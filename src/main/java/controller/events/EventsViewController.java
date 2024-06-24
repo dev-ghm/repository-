@@ -16,6 +16,7 @@ import together.vo.Event;
 import together.vo.Participant;
 import together.vo.Sport;
 import together.vo.User;
+import together.vo.complex.ParticipantWithDetail;
 
 @WebServlet("/events/*")
 public class EventsViewController extends HttpServlet {
@@ -36,14 +37,12 @@ public class EventsViewController extends HttpServlet {
 		Event event = eventDao.findById(id);
 		request.setAttribute("event", event);
 		Sport sport = sportDao.findByNumber(id);
-		request.setAttribute("sport", sport);
+		request.setAttribute("sport", sportDao.findByNumber(event.getSportid()));
 		
-		List<Participant> participants =participantDao.findByEventId(id);
-		
+		List<ParticipantWithDetail> participants = participantDao.findByEventIdWithUserDetail(id);	// 이벤트에 참가중인 정보 가지고 와서
 		List<String> userIds = new ArrayList<>();
-		for (Participant one : participants) {	// 반복문돌면서
-			userIds.add(one.getUserid());	// 참가자 아이디만 추출해서 List에 모으고
-		}
+		for (ParticipantWithDetail one : participants) 	// 반복문돌면서
+			userIds.add(one.getParticipant().getUserid());	
 		
 		// 로그인하고 있는 사용자 정보, 세션에서 얻어서
 		User authUser = (User)request.getSession().getAttribute("authUser");
@@ -66,10 +65,13 @@ public class EventsViewController extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/view/events/view-comments.jsp").forward(request, response);
 		}
 		
-	} catch (Exception e) {
+		
+		} catch (Exception e) {
 		e.printStackTrace();
 		request.getRequestDispatcher("/WEB-INF/view/events/error.jsp").forward(request, response);
 	}
-	}
+		}	
 }
+
+
 

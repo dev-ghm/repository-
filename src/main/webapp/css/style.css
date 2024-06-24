@@ -14,6 +14,9 @@ a {
 	text-decoration: none;
 }
 
+input:focus {
+	outline: none;
+}
 button:hover {
 	background-color: #ddd;
 	cursor: pointer;
@@ -27,6 +30,10 @@ button:active {
 /* 영역 사이즈 클래스 */
 .container {
 	width: 1140px;
+	margin: auto;
+}
+.container2 {
+	width: 1500px;
 	margin: auto;
 }
 
@@ -88,6 +95,32 @@ button:active {
 .warning {
 	color: orangered;
 }
+
+.info {
+	color: limegreen;
+}
+
+
+/* 뱃지 클래스 */
+.badge-info {
+	background-color:  limegreen;
+	color: white;
+	padding : 4px 8px;
+	border-radius: 4px;
+}
+.badge-warning {
+	background-color:  orangered;
+	color: white;
+	padding : 4px 8px;
+	border-radius: 4px;
+}
+.badge-dark {
+	background-color:  #333333;
+	color: white;
+	padding : 4px 8px;
+	border-radius: 4px;
+}
+
 
 .fs-1 {
 	font-size: 2rem;
@@ -200,19 +233,73 @@ button:active {
 .my-5 {
 	margin: 20px auto;
 }
-
+/*
+.item {
+	box-shadow: 1px 2px 4px 1px #888888;
+}
+*/
 .item:hover {
-	background-color: gray;
-	cursor: pointer;
+	background-color: #eee;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+}
+.search {
+  position: relative;
+  width: 300px;
+}
 
+h1, h2, h3, h4, h5, h6 {
+	font-weight: lighter;
+}
 
+body {
+	min-width: 960px;
+}
 
+.no-deco-link {
+	color: #444;
+	text-decoration: none;
+}
 
+.fs-small {
+	font-size: 0.8rem;
+}
 
+.fs-large {
+	font-size: 1.2rem;
+}
 
+.srch-bar {
+	padding: 12px;
+	border-radius: 12px;
+	font-size: 1.1rem;
+	width: 480px;
+}
 
+.login-input {
+	padding: 16px;
+	border: 1px solid #ddd;
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 1.25rem;
+	border-radius: 20px;
+}
 
-
-
+/* table css ======================================== */
+.default-table {
+	border-collapse: collapse;
+	width: 100%;
+	margin-top:10px;
+}
+.border-bottom {
+	border-bottom: 1px solid #ddd;
+}
+.default-table td, .default-table th {
+	padding : 4px;
+}
+.text-center {
+	text-align: center;
+}

@@ -21,8 +21,13 @@
 	<div class="container px-1">
 		<div class="my-3"><%@ include file="/WEB-INF/view/common/navbar.jsp" %></div>
 		<h1 class="my-2">등록된 체육행사들</h1>
-
-		<div style="display: flex; flex-wrap: wrap;">
+		<div style="display: flex; gap:5px;">
+			<c:forEach items="${tagCounts }" var="one">
+				<span class="badge-info">${one.tag } (${one.cnt }) </span>
+			</c:forEach>
+		</div>
+		
+	<div style="display: flex; flex-wrap: wrap;">		
 			<c:forEach items="${events }" var="one">
 				<div style="width: 50%; padding: 4px;">
 					<div class="border-rounded p-3 item" style="height: 150px;">

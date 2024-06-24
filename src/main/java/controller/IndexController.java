@@ -21,5 +21,7 @@ public class IndexController extends HttpServlet{
 		}else {
 			request.getRequestDispatcher("/WEB-INF/view/index-logon.jsp").forward(request, response);
 		}
+		
+		
 	}
 }

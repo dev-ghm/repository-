@@ -53,14 +53,14 @@
 			<ul style="list-style: none">
 				<li><c:forEach items="${p }" var="one">
 						<c:choose>
-							<c:when test="${one.userid == event.hostid }">
+							<c:when test="${one.Participant.userid == event.hostid }">
 								<div>
-									<span class="warning">${one.userid } (주최자)</span> -
-									${one.joinat } 에 참가신청
+									<span class="warning">${one.Participant.userid } (주최자)</span> -
+									${one.Participant.joinat } 에 참가신청
 								</div>
 							</c:when>
 							<c:otherwise>
-								<div>${one.userid } - ${one.joinat } 에 참가신청</div>
+								<div>${one.Participant.userid } - ${one.Participant.joinat } 에 참가신청</div>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach></li>

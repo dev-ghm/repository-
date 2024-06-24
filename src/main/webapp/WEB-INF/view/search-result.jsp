@@ -20,23 +20,17 @@
 <body>
 	<%@ include file="/WEB-INF/view/common/navbar.jsp"%>
 	<div class="container px-1">
-
-		<div>
-			<span>체육행사등록</span> &gt; <span class="warning">체육시설 선택</span>
-		</div>
-		<h2 class="my-2">시작하기: 체육시설 선택</h2>
-		<p>
-			원하는 <span class="warning">체육시설</span>을 선택하고 자세한 정보를 입력하세요.
-		</p>
-		<form action="${pageContext.servletContext.contextPath }/events/new">
-			<select name="type" class="w-50 text-center p-2 border-rounded fs-3">
-				<c:forEach var="one" items="${types }">
-					<option>${one }</option>
-				</c:forEach>
-			</select>
-			<button type="submit" class="p-2 border-rounded fs-3">선 택</button>
-		</form>
-
+		<h1 class="my-2">"${param.q }" 검색결과 </h1>
+		
+		<ul>
+		<c:choose>
+		<c:when test="${one.title }"></c:when>
+			<c:forEach items="${foundEvents }" var="one">
+				<li>${one.title }  - ${one.description }</li>
+			</c:forEach>
+		</c:choose>
+		</ul>
+		
 	</div>
 </body>
 </html>
